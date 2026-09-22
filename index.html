@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Expériences de l'enfance – Questionnaire combiné | Cabinet de psychothérapie</title>
+<style>
+:root{
+  /* Thématique guidance parentale – Nuancier unifié du Cabinet */
+  --amethyste:#5E2D7A; --violet:#8C5AAA; --amethyste-clair:#C4A0D8; --lavande:#C5BDE0;
+  --lilas:#E8D8F5; --rose-dragee:#E8A0B0; --sable-violet:#EDE5F5; --brume-violette:#F5F0FA;
+  --fond:#FDFBFF; --gris:#706870; --nuit:#2A1040; --blanc:#FFFFFF;
+  /* Encarts fonctionnels */
+  --alerte-fond:#FFF0F0; --alerte:#C0392B; --metho-fond:#FFF8E8; --metho:#D4A017;
+  --ligne:#E3D9EE;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--fond);color:var(--nuit);font:11pt/1.15 Arial,Helvetica,sans-serif}
+h1,h2,h3,h4{font-family:Georgia,"Times New Roman",serif;font-weight:bold;line-height:1.25;margin:0 0 .5em}
+h1{font-size:18pt;color:var(--blanc)}
+h2{font-size:14pt;color:var(--amethyste);display:flex;align-items:center;gap:10px}
+h3{font-size:12pt;color:var(--amethyste)}
+p{margin:0 0 .9em;text-align:justify;line-height:1.5}
+cite,.cite{font-family:Garamond,"EB Garamond","Times New Roman",serif;font-style:italic}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px}
+header.top{background:var(--amethyste);color:var(--blanc);padding:28px 0 22px}
+header.top h1{color:var(--blanc);margin:0 0 .2em}
+header.top p{margin:0;opacity:.92}
+.progress{height:6px;background:var(--lilas)}
+.progress span{display:block;height:100%;width:0;background:var(--violet);transition:width .3s}
+main{padding:32px 0 48px}
+.panel{background:var(--blanc);border:1px solid var(--ligne);border-radius:10px;padding:26px 24px;margin-bottom:22px}
+.note{border-left:4px solid var(--violet);background:var(--brume-violette);padding:14px 16px;border-radius:0 8px 8px 0;margin:0 0 1em}
+.note.alerte{border-color:var(--alerte);background:var(--alerte-fond)}
+.note.metho{border-color:var(--metho);background:var(--metho-fond)}
+label.field{display:block;font-weight:bold;margin:0 0 4px}
+input[type=text],input[type=date]{width:100%;padding:10px 12px;border:1px solid var(--ligne);border-radius:6px;font:inherit;margin-bottom:14px;background:var(--blanc)}
+.check{display:flex;gap:10px;align-items:flex-start;margin:6px 0 0}
+.check input{margin-top:5px;width:18px;height:18px;accent-color:var(--amethyste)}
+.btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;margin-top:8px}
+button{font:inherit;cursor:pointer;border-radius:6px}
+.btn{background:var(--amethyste);color:var(--blanc);border:none;padding:12px 22px;font-weight:bold}
+.btn:hover{background:var(--nuit)}
+.btn.sec{background:transparent;color:var(--amethyste);border:1px solid var(--violet)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+:focus-visible{outline:3px solid var(--rose-dragee);outline-offset:2px}
+.part-intro{margin-bottom:18px}
+.item{padding:18px 0;border-top:1px solid var(--ligne)}
+.item:first-of-type{border-top:none}
+.item.manque{background:var(--alerte-fond);margin:0 -24px;padding:18px 24px}
+.item .q{margin:0 0 10px}
+.item .num{color:var(--violet);font-weight:bold;margin-right:6px}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.scale.yn{grid-template-columns:repeat(2,1fr);max-width:320px}
+.opt{border:1px solid var(--ligne);background:var(--blanc);padding:9px 4px;font-size:.88rem;color:var(--nuit)}
+.opt:hover{border-color:var(--violet)}
+.opt[aria-pressed=true]{background:var(--violet);border-color:var(--violet);color:var(--blanc);font-weight:bold}
+.skip{background:none;border:none;color:var(--gris);font-size:.85rem;text-decoration:underline;padding:6px 0 0}
+.skip[aria-pressed=true]{color:var(--amethyste);font-weight:bold}
+.hidden{display:none!important}
+/* Résultats */
+.ace-dots{display:flex;gap:8px;margin:10px 0 6px;flex-wrap:wrap}
+.ace-dots i{width:26px;height:26px;border-radius:50%;border:2px solid var(--amethyste-clair);display:block}
+.ace-dots i.on{background:var(--amethyste);border-color:var(--amethyste)}
+.ace-score{font-family:Georgia,serif;font-size:2.6rem;font-weight:bold;color:var(--amethyste);line-height:1}
+.profil{margin-top:8px}
+.bar-row{display:grid;grid-template-columns:190px 1fr 86px;gap:12px;align-items:center;padding:9px 0;border-top:1px solid var(--ligne)}
+.bar-row:first-child{border-top:none}
+.bar{height:14px;background:var(--sable-violet);border-radius:7px;position:relative;overflow:hidden}
+.bar span{position:absolute;left:0;top:0;bottom:0;background:var(--lavande);border-radius:7px}
+.bar-row.fort .bar span{background:var(--violet)}
+.bar-val{font-size:.85rem;text-align:right;color:var(--gris)}
+.band{font-size:.8rem;display:block}
+.scale-legend{display:flex;justify-content:space-between;font-size:.75rem;color:var(--gris);margin:4px 0 0 202px;padding-right:98px}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--ligne);vertical-align:top}
+th{font-family:Georgia,serif;color:var(--blanc);background:var(--amethyste)}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.78rem;background:var(--lilas)}
+.tag.warn{background:var(--rose-dragee);color:var(--nuit)}
+details.fiche{border:1px solid var(--ligne);border-radius:8px;margin:0 0 12px;background:var(--blanc)}
+details.fiche summary{cursor:pointer;padding:14px 16px;font-family:Georgia,serif;font-weight:bold;display:flex;justify-content:space-between;gap:10px}
+details.fiche.fort{border-color:var(--violet);border-left-width:4px}
+details.fiche .body{padding:0 18px 14px}
+details.fiche h4{font-size:11pt;color:var(--violet);margin:14px 0 6px}
+details.fiche ul{margin:0 0 .6em;padding-left:1.2em}
+.refs li{margin-bottom:8px;font-size:.9rem}
+footer.pied{text-align:center;font:9pt Arial,Helvetica,sans-serif;color:var(--gris);border-top:1px solid var(--ligne);padding:18px 0 28px}
+@media (max-width:620px){
+  .scale{grid-template-columns:1fr}
+  .opt{text-align:left;padding:10px 12px}
+  .bar-row{grid-template-columns:1fr;gap:4px}
+  .bar-val{text-align:left}
+  .scale-legend{margin-left:0;padding-right:0}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{
+  body{background:#fff;font-size:11pt}
+  header.top{background:#fff;color:var(--nuit);border-bottom:3px solid var(--amethyste)}
+  header.top h1{color:var(--amethyste)}
+  .progress,.btns,.noprint,#step-intro,#step-p1,#step-p2{display:none!important}
+  .panel{border:none;padding:0 0 12px;break-inside:avoid}
+  details.fiche{break-inside:avoid}
+  details.fiche:not([open]) .body{display:block}
+  .bar span,.ace-dots i.on{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  th{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  footer.pied{position:fixed;bottom:0;left:0;right:0;padding:4px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>Expériences de l'enfance</h1>
+    <p>Questionnaire combiné de repérage des adversités vécues avant 18 ans</p>
+  </div>
+</header>
+<div class="progress" aria-hidden="true"><span id="prog"></span></div>
+
+<main class="wrap">
+
+<!-- ACCUEIL -->
+<section id="step-intro">
+  <div class="panel">
+    <h2><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#8C5AAA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>Avant de commencer</span></h2>
+    <p>Ce questionnaire porte sur des expériences que vous avez pu vivre pendant votre enfance et votre adolescence, jusqu'à 18 ans. Il comprend deux parties : 25 affirmations à évaluer selon leur fréquence, puis 10 questions auxquelles répondre par oui ou non. Comptez environ 15 minutes.</p>
+    <p>Il n'y a pas de bonne ou de mauvaise réponse. Répondez selon votre souvenir, sans chercher à être exhaustif(ve). Pour chaque question, vous pouvez choisir « Je préfère ne pas répondre ».</p>
+    <div class="note">Certaines questions abordent des sujets douloureux. Vous pouvez faire une pause à tout moment et reprendre ces questions avec votre thérapeute en séance. Ce questionnaire n'établit aucun diagnostic : il sert de point de départ à un échange.</div>
+    <div class="note alerte">Si ces questions réveillent une détresse importante ou des idées suicidaires, vous pouvez appeler le <strong>3114</strong>, numéro national de prévention du suicide, joignable 24 h/24 et 7 j/7, ou le <strong>15</strong> en cas d'urgence.</div>
+  </div>
+  <div class="panel">
+    <label class="field" for="nom">Nom et prénom</label>
+    <input type="text" id="nom" autocomplete="name">
+    <label class="field" for="date">Date de passation</label>
+    <input type="date" id="date">
+    <div class="check">
+      <input type="checkbox" id="consent">
+      <label for="consent">J'ai compris que ce questionnaire est un outil d'échange clinique et que je peux ne pas répondre à certaines questions.</label>
+    </div>
+  </div>
+  <div class="btns"><span></span><button class="btn" id="go1" disabled>Commencer la première partie</button></div>
+</section>
+
+<!-- PARTIE 1 -->
+<section id="step-p1" class="hidden">
+  <div class="panel">
+    <div class="part-intro">
+      <h2><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#8C5AAA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 12h16M4 19h10"/></svg><span>Première partie – Ce que vous avez vécu</span></h2>
+      <p>Pour chaque affirmation, indiquez à quelle fréquence elle correspond à ce que vous avez vécu <strong>avant vos 18 ans</strong>, au sein de votre foyer ou de votre entourage proche.</p>
+    </div>
+    <div id="list-p1"></div>
+  </div>
+  <div class="btns">
+    <button class="btn sec" id="back1">Retour</button>
+    <button class="btn" id="go2">Continuer vers la deuxième partie</button>
+  </div>
+</section>
+
+<!-- PARTIE 2 -->
+<section id="step-p2" class="hidden">
+  <div class="panel">
+    <div class="part-intro">
+      <h2><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#8C5AAA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg><span>Deuxième partie – Votre environnement familial</span></h2>
+      <p>Pendant vos 18 premières années de vie, répondez par oui ou par non à chacune des questions suivantes.</p>
+    </div>
+    <div id="list-p2"></div>
+  </div>
+  <div class="btns">
+    <button class="btn sec" id="back2">Retour</button>
+    <button class="btn" id="go3">Voir le compte rendu</button>
+  </div>
+</section>
+
+<!-- RÉSULTATS -->
+<section id="step-res" class="hidden">
+  <div class="panel">
+    <h2><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#8C5AAA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg><span>Compte rendu</span></h2>
+    <p id="res-id"></p>
+    <div class="note">Ce compte rendu décrit des expériences rapportées. Il ne mesure ni leur impact, ni la présence d'un trouble, et ne remplace pas l'entretien clinique. Il est destiné à être lu et discuté avec votre thérapeute.</div>
+  </div>
+
+  <div class="panel">
+    <h2><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#8C5AAA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg><span>Score ACE</span></h2>
+    <div class="ace-score"><span id="ace-n">0</span> <span style="font-size:1.1rem;color:var(--gris)">/ 10</span></div>
+    <div class="ace-dots" id="ace-dots" aria-hidden="true"></div>
+    <p id="ace-miss" class="cite"></p>
+    <p>Le score ACE correspond au nombre de catégories d'expériences adverses rapportées dans la deuxième partie. Dans l'étude princeps, qui portait alors sur 7 catégories, la relation entre le nombre de catégories et les risques pour la santé à l'âge adulte était graduée : les personnes rapportant 4 catégories ou plus présentaient un risque 4 à 12 fois plus élevé d'alcoolisme, d'usage de drogues, de dépression et de tentative de suicide que celles n'en rapportant aucune <cite>(Felitti et al., 1998)</cite>.</p>
+    <p>Ces données sont populationnelles. Elles ne prédisent pas l'évolution d'une personne en particulier et ne tiennent compte ni de la sévérité, ni de la durée, ni des facteurs de protection.</p>
+  </div>
+
+  <div class="panel">
+    <h2><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#8C5AAA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Profil par dimension</span></h2>
+    <p>Moyenne des réponses de la première partie (1 = jamais, 5 = très souvent), après inversion des affirmations formulées positivement.</p>
+    <div class="profil" id="profil"></div>
+    <div class="scale-legend" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
+    <p class="cite" style="margin-top:14px;font-size:.92rem">Les intervalles « absent ou très rare » (moins de 1,5), « occasionnel » (1,5 à 2,4), « régulier » (2,5 à 3,4) et « fréquent » (3,5 et plus) traduisent seulement la fréquence moyenne déclarée. Ce ne sont pas des seuils cliniques validés.</p>
+  </div>
+
+  <div class="panel">
+    <h2><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#8C5AAA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10l-3-3M17 17H7l3 3"/></svg><span>Concordance entre les deux parties</span></h2>
+    <p>Chacune des cinq premières questions ACE recouvre une dimension de la première partie. Une discordance n'est pas une erreur : elle peut refléter une difficulté à nommer une expérience, une banalisation, ou une différence de formulation. Elle mérite d'être explorée.</p>
+    <div style="overflow-x:auto"><table id="concord"></table></div>
+  </div>
+
+  <div class="panel">
+    <h2><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#8C5AAA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg><span>Réponses à reprendre en séance</span></h2>
+    <p>Affirmations cotées « souvent » ou « très souvent » (après inversion), toute réponse autre que « jamais » dans la dimension abus sexuel, et questions laissées sans réponse.</p>
+    <div id="explore"></div>
+  </div>
+
+  <div class="panel">
+    <h2><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#8C5AAA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h7a3 3 0 013 3v13a2 2 0 00-2-2H4zM20 4h-5a3 3 0 00-3 3"/></svg><span>Lecture clinique par dimension</span></h2>
+    <p>Les fiches encadrées correspondent aux dimensions où une exposition est rapportée. Les manifestations et les schémas indiqués sont des <strong>pistes d'exploration</strong>, non des conséquences attendues : beaucoup de personnes exposées ne les présentent pas, et elles peuvent avoir d'autres origines.</p>
+    <div id="fiches"></div>
+  </div>
+
+  <div class="panel note metho">
+    <h2><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="#8C5AAA" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><span>Note méthodologique</span></h2>
+    <p>Cet outil associe deux éléments. La deuxième partie est une traduction française du questionnaire ACE à 10 items issu de l'étude de Felitti et al. (1998) ; cette traduction n'a pas fait l'objet d'une validation. La première partie ne reproduit pas le Childhood Trauma Questionnaire, qui est un instrument sous licence commerciale : elle en reprend l'architecture en cinq dimensions (abus émotionnel, physique et sexuel, négligence émotionnelle et physique) avec des items originaux rédigés pour ce cabinet.</p>
+    <p>En conséquence, cet outil ne dispose d'aucune donnée psychométrique (fidélité, validité, normes) et ses scores ne peuvent pas être comparés aux seuils publiés pour le CTQ-SF <cite>(Bernstein et al., 2003)</cite>. Il s'agit d'un support d'anamnèse structurée. Comme tout questionnaire rétrospectif, il dépend de la mémoire de la personne et de ce qu'elle est prête à dire au moment de la passation.</p>
+    <h3>Références</h3>
+    <ol class="refs">
+      <li>Bernstein, D. P., Stein, J. A., Newcomb, M. D., et al. (2003). Development and validation of a brief screening version of the Childhood Trauma Questionnaire. <cite>Child Abuse &amp; Neglect</cite>, 27(2), 169-190.</li>
+      <li>Chen, L. P., Murad, M. H., Paras, M. L., et al. (2010). Sexual abuse and lifetime diagnosis of psychiatric disorders: systematic review and meta-analysis. <cite>Mayo Clinic Proceedings</cite>, 85(7), 618-629.</li>
+      <li>Felitti, V. J., Anda, R. F., Nordenberg, D., et al. (1998). Relationship of childhood abuse and household dysfunction to many of the leading causes of death in adults: The Adverse Childhood Experiences (ACE) Study. <cite>American Journal of Preventive Medicine</cite>, 14(4), 245-258. https://doi.org/10.1016/S0749-3797(98)00017-8</li>
+      <li>Hughes, K., Bellis, M. A., Hardcastle, K. A., et al. (2017). The effect of multiple adverse childhood experiences on health: a systematic review and meta-analysis. <cite>The Lancet Public Health</cite>, 2(8), e356-e366. https://doi.org/10.1016/S2468-2667(17)30118-4</li>
+      <li>Norman, R. E., Byambaa, M., De, R., et al. (2012). The long-term health consequences of child physical abuse, emotional abuse, and neglect: a systematic review and meta-analysis. <cite>PLoS Medicine</cite>, 9(11), e1001349. https://doi.org/10.1371/journal.pmed.1001349</li>
+      <li>Teicher, M. H., &amp; Samson, J. A. (2016). Annual research review: Enduring neurobiological effects of childhood abuse and neglect. <cite>Journal of Child Psychology and Psychiatry</cite>, 57(3), 241-266.</li>
+      <li>Young, J. E., Klosko, J. S., &amp; Weishaar, M. E. (2003). <cite>Schema Therapy: A Practitioner's Guide</cite>. New York : Guilford Press.</li>
+    </ol>
+  </div>
+
+  <div class="btns noprint">
+    <button class="btn sec" id="restart">Recommencer</button>
+    <span style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn sec" id="mail">Envoyer à ma thérapeute</button>
+      <button class="btn" id="pdf">Exporter en PDF</button>
+    </span>
+  </div>
+</section>
+</main>
+
+<footer class="pied">© Cabinet de psychothérapie – Siret : 948 116 967 00019 – contact@melodiepsychotherapie.fr</footer>
+
+<script>
+const DIMS = {
+  AE:{label:"Abus émotionnel"},
+  AP:{label:"Abus physique"},
+  AS:{label:"Abus sexuel"},
+  NE:{label:"Négligence émotionnelle"},
+  NP:{label:"Négligence physique"}
+};
+
+// Items originaux, présentés dans un ordre entremêlé. rev = formulé positivement (score inversé)
+const P1 = [
+  {d:"NE",rev:true,t:"Je pouvais me confier à un adulte de mon foyer quand j'étais triste ou inquiet(ète)."},
+  {d:"AE",t:"Un adulte de mon foyer se moquait de moi ou me ridiculisait, y compris devant d'autres personnes."},
+  {d:"NP",t:"Les repas étaient irréguliers ou insuffisants à la maison."},
+  {d:"AP",t:"Un adulte de mon foyer me frappait lorsqu'il était en colère."},
+  {d:"AS",t:"Une personne plus âgée m'a touché(e) de façon sexuelle alors que je ne pouvais pas réellement y consentir."},
+  {d:"AE",t:"On me faisait comprendre que j'étais une charge, ou que j'aurais mieux fait de ne pas exister."},
+  {d:"NE",rev:true,t:"Un adulte de mon foyer me montrait de l'affection, par des gestes ou par des mots."},
+  {d:"AP",t:"J'ai gardé des marques (bleus, griffures, brûlures) après avoir été puni(e) physiquement."},
+  {d:"NP",t:"Mes besoins de soins médicaux ou dentaires n'étaient pas pris en charge."},
+  {d:"AS",t:"Une personne m'a exposé(e) à des actes, des images ou des propos sexuels inadaptés à mon âge."},
+  {d:"AE",t:"J'étais menacé(e) (d'être abandonné(e), placé(e) ou frappé(e)) pour que j'obéisse."},
+  {d:"NE",t:"Mes émotions étaient ignorées ou considérées comme sans importance."},
+  {d:"AP",t:"J'avais peur d'être blessé(e) physiquement par un adulte de mon foyer."},
+  {d:"NP",rev:true,t:"Un adulte veillait à ma sécurité et me surveillait de façon adaptée à mon âge."},
+  {d:"AS",t:"On m'a contraint(e) ou incité(e) à toucher une autre personne de façon sexuelle."},
+  {d:"AE",t:"Mes réussites étaient ignorées ou rabaissées par un adulte de mon foyer."},
+  {d:"AP",t:"On me secouait, me poussait violemment ou me projetait contre un meuble ou un mur."},
+  {d:"NE",rev:true,t:"Je me sentais important(e) aux yeux d'au moins un adulte de mon foyer."},
+  {d:"NP",t:"Je devais m'occuper seul(e) de moi, ou de mes frères et sœurs, à un âge où j'aurais dû être pris(e) en charge."},
+  {d:"AS",t:"On m'a demandé de garder le secret sur des gestes à caractère sexuel."},
+  {d:"AE",t:"Un adulte de mon foyer me criait dessus d'une manière qui me faisait peur."},
+  {d:"AP",t:"Les punitions physiques que je recevais étaient disproportionnées ou imprévisibles."},
+  {d:"NE",t:"Je me sentais seul(e) face à mes difficultés, même entouré(e) de ma famille."},
+  {d:"NP",t:"Mon hygiène, mes vêtements ou mon logement étaient négligés au point de me gêner ou de me faire remarquer."},
+  {d:"AS",t:"J'ai subi une pression ou une menace pour participer à une activité sexuelle."}
+];
+
+// Questionnaire ACE (Felitti et al., 1998) – traduction française non validée
+const P2 = [
+  {d:"AE",t:"Un parent ou un autre adulte de votre foyer vous insultait-il souvent, vous rabaissait-il ou vous humiliait-il ? Ou agissait-il d'une manière qui vous faisait craindre d'être blessé(e) physiquement ?"},
+  {d:"AP",t:"Un parent ou un autre adulte de votre foyer vous poussait-il, vous empoignait-il, vous giflait-il ou vous lançait-il des objets ? Ou vous a-t-il déjà frappé(e) si fort que vous en avez gardé des marques ou avez été blessé(e) ?"},
+  {d:"AS",t:"Un adulte ou une personne d'au moins 5 ans de plus que vous vous a-t-il déjà touché(e) ou caressé(e), ou vous a-t-il fait toucher son corps de façon sexuelle ? Ou a-t-il tenté d'avoir, ou a-t-il eu, un rapport sexuel avec vous ?"},
+  {d:"NE",t:"Aviez-vous souvent le sentiment que personne dans votre famille ne vous aimait ou ne vous trouvait important(e) ou spécial(e) ? Ou que les membres de votre famille ne veillaient pas les uns sur les autres, ne se sentaient pas proches ou ne se soutenaient pas ?"},
+  {d:"NP",t:"Vous est-il souvent arrivé de ne pas avoir assez à manger, de devoir porter des vêtements sales, ou de n'avoir personne pour vous protéger ? Ou vos parents étaient-ils trop ivres ou drogués pour s'occuper de vous ou vous emmener chez le médecin si nécessaire ?"},
+  {d:"DF",t:"Vos parents ont-ils été séparés ou ont-ils divorcé ?"},
+  {d:"DF",t:"Votre mère ou belle-mère était-elle souvent poussée, empoignée, giflée, ou recevait-elle des objets ? Ou était-elle parfois ou souvent frappée à coups de pied, mordue, frappée du poing ou avec un objet dur ? Ou a-t-elle déjà été frappée de façon répétée pendant plusieurs minutes, ou menacée avec une arme à feu ou un couteau ?"},
+  {d:"DF",t:"Avez-vous vécu avec une personne ayant un problème d'alcool ou consommant des drogues ?"},
+  {d:"DF",t:"Un membre de votre foyer souffrait-il de dépression ou d'un trouble psychique, ou a-t-il fait une tentative de suicide ?"},
+  {d:"DF",t:"Un membre de votre foyer a-t-il été incarcéré ?"}
+];
+
+const LIKERT = ["Jamais","Rarement","Parfois","Souvent","Très souvent"];
+
+const FICHES = {
+  AE:{
+    def:"Paroles ou attitudes répétées d'un adulte qui dévalorisent, humilient, menacent ou rejettent l'enfant.",
+    rech:"Une méta-analyse associe l'abus émotionnel, comme l'abus physique et la négligence, à un risque accru de troubles dépressifs, de troubles anxieux, de tentatives de suicide et d'usage de drogues à l'âge adulte (Norman et al., 2012).",
+    manif:["Autocritique sévère, discours intérieur dévalorisant.","Hypersensibilité à la critique, au rejet ou à l'humiliation.","Recherche d'approbation, perfectionnisme, difficulté à recevoir un compliment.","Vigilance accrue aux signes d'hostilité dans les relations."],
+    sch:["Imperfection / Honte","Méfiance / Abus","Punition","Échec"]
+  },
+  AP:{
+    def:"Actes de violence physique commis par un adulte envers l'enfant, avec ou sans blessure visible.",
+    rech:"Associé aux mêmes troubles que l'abus émotionnel dans la méta-analyse de Norman et al. (2012). Les mauvais traitements dans l'enfance sont par ailleurs associés à des modifications durables des systèmes de réponse au stress et de régulation émotionnelle (Teicher & Samson, 2016).",
+    manif:["Hypervigilance, réactions de sursaut.","Peur ou colère intenses en situation de conflit, ou évitement de tout conflit.","Difficulté à se sentir en sécurité dans la proximité physique ou affective.","Banalisation de la violence subie (« je l'avais mérité »), à explorer avec tact."],
+    sch:["Méfiance / Abus","Vulnérabilité au danger","Assujettissement"]
+  },
+  AS:{
+    def:"Tout contact, sollicitation ou exposition à caractère sexuel imposé à l'enfant par une personne plus âgée ou en position d'autorité.",
+    rech:"Une méta-analyse associe l'abus sexuel dans l'enfance à un risque accru, au cours de la vie, de troubles anxieux, de dépression, de troubles des conduites alimentaires, de trouble de stress post-traumatique, de troubles du sommeil et de tentatives de suicide (Chen et al., 2010).",
+    manif:["Honte, sentiment d'être sali(e) ou différent(e).","Manifestations dissociatives, reviviscences.","Difficultés dans l'intimité et la sexualité (évitement ou mise en danger).","Méfiance marquée dans les relations proches."],
+    sch:["Méfiance / Abus","Imperfection / Honte","Vulnérabilité au danger"],
+    extra:"Toute réponse autre que « jamais » justifie une exploration attentive, au rythme choisi par la personne. Si une personne mineure est actuellement en danger, le 119 (Allô Enfance en Danger) peut être contacté."
+  },
+  NE:{
+    def:"Absence durable de réponse aux besoins affectifs de l'enfant : réconfort, attention, affection, reconnaissance de ses émotions.",
+    rech:"La négligence fait partie des formes de maltraitance associées à un risque accru de troubles dépressifs et anxieux à l'âge adulte dans la méta-analyse de Norman et al. (2012).",
+    manif:["Difficulté à identifier, nommer ou exprimer ses émotions.","Sentiment de vide ou de ne pas compter pour les autres.","Dépendance affective, ou à l'inverse autosuffisance marquée et malaise face au besoin d'autrui.","Difficulté à demander de l'aide ; attirance possible pour des partenaires peu disponibles."],
+    sch:["Carence affective","Abandon / Instabilité","Inhibition émotionnelle"]
+  },
+  NP:{
+    def:"Défaut durable de réponse aux besoins de base : alimentation, hygiène, soins, sécurité, supervision.",
+    rech:"Incluse dans les formes de négligence étudiées par Norman et al. (2012).",
+    manif:["Sentiment persistant d'insécurité matérielle.","Difficulté à prendre soin de soi et de sa santé.","Autonomie précoce, parentification (s'être occupé(e) de soi ou de la fratrie).","Honte liée aux conditions de vie de l'enfance."],
+    sch:["Vulnérabilité au danger","Carence affective","Autosacrifice"]
+  },
+  DF:{
+    label:"Dysfonctionnement familial",
+    def:"Exposition à un environnement familial instable : séparation des parents, violence conjugale, addiction, trouble psychique ou incarcération d'un membre du foyer (questions ACE 6 à 10).",
+    rech:"L'étude ACE a mis en évidence une relation graduée entre le nombre de catégories d'expériences adverses, incluant ces dysfonctionnements du foyer, et les risques pour la santé à l'âge adulte (Felitti et al., 1998). Une méta-analyse ultérieure retrouve, chez les personnes rapportant 4 expériences ou plus, des associations particulièrement fortes avec l'usage problématique de drogues et les violences interpersonnelles et auto-infligées (Hughes et al., 2017).",
+    manif:["Attention constante à l'humeur des autres.","Rôle de soignant(e) ou de médiateur(rice) dans la famille, hyper-responsabilité.","Crainte de l'abandon ou de l'instabilité dans le couple.","Difficulté à faire confiance à la durée des liens."],
+    sch:["Abandon / Instabilité","Autosacrifice","Méfiance / Abus"]
+  }
+};
+
+const ans1 = new Array(P1.length).fill(null); // 1..5 ou "NR"
+const ans2 = new Array(P2.length).fill(null); // 1 / 0 / "NR"
+const $ = id => document.getElementById(id);
+
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+function buildList(container, items, answers, yn){
+  const el = $(container);
+  el.innerHTML = items.map((it,i)=>{
+    const opts = yn ? [["Oui",1],["Non",0]] : LIKERT.map((l,k)=>[l,k+1]);
+    return `<div class="item" id="${container}-${i}">
+      <p class="q"><span class="num">${i+1}.</span>${esc(it.t)}</p>
+      <div class="scale${yn?" yn":""}" role="group" aria-label="Réponse à la question ${i+1}">
+        ${opts.map(([l,v])=>`<button type="button" class="opt" data-i="${i}" data-v="${v}" aria-pressed="false">${l}</button>`).join("")}
+      </div>
+      <button type="button" class="skip" data-i="${i}" data-v="NR" aria-pressed="false">Je préfère ne pas répondre</button>
+    </div>`;
+  }).join("");
+  el.addEventListener("click", e=>{
+    const b = e.target.closest("button[data-i]"); if(!b) return;
+    const i = +b.dataset.i, v = b.dataset.v === "NR" ? "NR" : +b.dataset.v;
+    answers[i] = v;
+    const row = $(`${container}-${i}`);
+    row.classList.remove("manque");
+    row.querySelectorAll("button[data-i]").forEach(x=>x.setAttribute("aria-pressed", x===b ? "true":"false"));
+    updateProg();
+  });
+}
+
+function updateProg(){
+  const done = ans1.filter(a=>a!==null).length + ans2.filter(a=>a!==null).length;
+  $("prog").style.width = (done/(P1.length+P2.length)*100)+"%";
+}
+
+function show(id){
+  ["step-intro","step-p1","step-p2","step-res"].forEach(s=>$(s).classList.toggle("hidden", s!==id));
+  window.scrollTo({top:0});
+}
+
+function checkAll(container, answers){
+  let first = null;
+  answers.forEach((a,i)=>{
+    const row = $(`${container}-${i}`);
+    if(a===null){ row.classList.add("manque"); if(first===null) first=row; }
+  });
+  if(first){ first.scrollIntoView({block:"center"}); first.querySelector("button").focus({preventScroll:true}); return false; }
+  return true;
+}
+
+function score1(i){ // score d'exposition 1..5 ou null
+  const a = ans1[i]; if(a==="NR"||a===null) return null;
+  return P1[i].rev ? 6-a : a;
+}
+
+function band(m){
+  if(m===null) return "non interprétable";
+  if(m<1.5) return "absent ou très rare";
+  if(m<2.5) return "occasionnel";
+  if(m<3.5) return "régulier";
+  return "fréquent";
+}
+
+function compute(){
+  const res = {};
+  Object.keys(DIMS).forEach(d=>{
+    const vals = P1.map((it,i)=>it.d===d?score1(i):undefined).filter(v=>v!==undefined);
+    const ok = vals.filter(v=>v!==null);
+    const mean = ok.length>=3 ? ok.reduce((a,b)=>a+b,0)/ok.length : null;
+    const anyExpo = ok.some(v=> d==="AS" ? v>=2 : v>=4);
+    res[d] = {mean, n:ok.length, nr:vals.length-ok.length, anyExpo};
+  });
+  const ace = ans2.filter(a=>a===1).length;
+  const aceNR = ans2.filter(a=>a==="NR").length;
+  return {res, ace, aceNR};
+}
+
+function renderResults(){
+  const {res, ace, aceNR} = compute();
+  const nom = $("nom").value.trim(), date = $("date").value;
+  const dFr = date ? new Date(date+"T12:00").toLocaleDateString("fr-FR",{day:"numeric",month:"long",year:"numeric"}) : "";
+  $("res-id").textContent = [nom||"Nom non renseigné", dFr?("passation du "+dFr):""].filter(Boolean).join(", ");
+
+  $("ace-n").textContent = ace;
+  $("ace-dots").innerHTML = ans2.map(a=>`<i class="${a===1?"on":""}"></i>`).join("");
+  $("ace-miss").textContent = aceNR ? `${aceNR} question${aceNR>1?"s":""} sans réponse : le score est un minimum.` : "";
+
+  $("profil").innerHTML = Object.keys(DIMS).map(d=>{
+    const r = res[d], m = r.mean;
+    const w = m===null ? 0 : ((m-1)/4*100);
+    const fort = m!==null && m>=2.5;
+    return `<div class="bar-row${fort?" fort":""}">
+      <span>${DIMS[d].label}</span>
+      <div class="bar" role="img" aria-label="${DIMS[d].label} : ${m===null?"non interprétable":m.toFixed(1)+" sur 5"}"><span style="width:${w}%"></span></div>
+      <span class="bar-val">${m===null?"–":m.toFixed(1).replace(".",",")}<span class="band">${band(m)}</span></span>
+    </div>`;
+  }).join("");
+
+  // Concordance
+  const rows = ["AE","AP","AS","NE","NP"].map((d,k)=>{
+    const a = ans2[k], r = res[d];
+    const aceTxt = a===1?"Oui":a===0?"Non":"Sans réponse";
+    const p1 = r.mean===null ? "–" : r.mean.toFixed(1).replace(".",",");
+    let lect = `<span class="tag">Concordant</span>`;
+    const exp1 = r.anyExpo || (r.mean!==null && r.mean>=2.5);
+    if(a==="NR"||r.mean===null) lect = `<span class="tag warn">À compléter</span>`;
+    else if(a===1 && !exp1) lect = `<span class="tag warn">ACE positif, fréquence faible en partie 1</span>`;
+    else if(a===0 && exp1) lect = `<span class="tag warn">ACE négatif, exposition en partie 1</span>`;
+    return `<tr><td>${DIMS[d].label}</td><td>ACE ${k+1} : ${aceTxt}</td><td>${p1}</td><td>${lect}</td></tr>`;
+  }).join("");
+  $("concord").innerHTML = `<thead><tr><th>Dimension</th><th>Réponse ACE</th><th>Moyenne partie 1</th><th>Lecture</th></tr></thead><tbody>${rows}</tbody>`;
+
+  // Réponses à explorer
+  const ex = [];
+  P1.forEach((it,i)=>{
+    const s = score1(i);
+    if(ans1[i]==="NR") ex.push([DIMS[it.d].label, it.t, "Sans réponse"]);
+    else if((it.d==="AS" && s>=2) || s>=4) ex.push([DIMS[it.d].label, it.t, (it.rev?"Réponse : ":"")+LIKERT[ans1[i]-1]+(it.rev?" (item inversé)":"")]);
+  });
+  P2.forEach((it,i)=>{
+    if(ans2[i]==="NR") ex.push(["ACE "+(i+1), it.t, "Sans réponse"]);
+  });
+  $("explore").innerHTML = ex.length
+    ? `<div style="overflow-x:auto"><table><thead><tr><th>Dimension</th><th>Affirmation</th><th>Réponse</th></tr></thead><tbody>${ex.map(r=>`<tr><td>${r[0]}</td><td>${esc(r[1])}</td><td>${r[2]}</td></tr>`).join("")}</tbody></table></div>`
+    : `<p>Aucune réponse ne remplit ces critères.</p>`;
+
+  // Fiches
+  const dfYes = ans2.slice(5).filter(a=>a===1).length;
+  const order = ["AE","AP","AS","NE","NP","DF"];
+  $("fiches").innerHTML = order.map(d=>{
+    const f = FICHES[d];
+    const label = d==="DF" ? f.label : DIMS[d].label;
+    let fort, statut;
+    if(d==="DF"){ fort = dfYes>0; statut = `${dfYes} / 5 questions ACE`; }
+    else { const r=res[d]; fort = r.anyExpo || (r.mean!==null && r.mean>=2.5) || ans2[["AE","AP","AS","NE","NP"].indexOf(d)]===1; statut = band(r.mean); }
+    return `<details class="fiche${fort?" fort":""}"${fort?" open":""}>
+      <summary><span>${label}</span><span class="tag${fort?" warn":""}">${fort?"Exposition rapportée":statut}</span></summary>
+      <div class="body">
+        <h4>Définition</h4><p>${f.def}</p>
+        <h4>Ce que documente la recherche</h4><p>${f.rech}</p>
+        <h4>Manifestations possibles à l'âge adulte</h4><ul>${f.manif.map(m=>`<li>${m}</li>`).join("")}</ul>
+        <h4>Schémas précoces à explorer</h4><p>${f.sch.join(" ; ")}. <span class="cite">Hypothèses de travail inspirées des origines décrites par Young et al. (2003), et non correspondances établies.</span></p>
+        ${f.extra?`<div class="note alerte">${f.extra}</div>`:""}
+      </div>
+    </details>`;
+  }).join("");
+}
+
+function mailBody(){
+  const {res, ace, aceNR} = compute();
+  let t = `Questionnaire « Expériences de l'enfance »\n${$("nom").value.trim()||"Nom non renseigné"} – ${$("date").value||"date non renseignée"}\n\n`;
+  t += `Score ACE : ${ace}/10${aceNR?` (${aceNR} sans réponse)`:""}\n\nProfil (moyenne 1 à 5) :\n`;
+  Object.keys(DIMS).forEach(d=>{ const m=res[d].mean; t += `- ${DIMS[d].label} : ${m===null?"non interprétable":m.toFixed(1)} (${band(m)})\n`; });
+  t += `\nRéponses détaillées partie 1 :\n`;
+  P1.forEach((it,i)=>{ t += `${i+1}. [${it.d}${it.rev?", inversé":""}] ${ans1[i]==="NR"?"NR":LIKERT[ans1[i]-1]}\n`; });
+  t += `\nRéponses ACE :\n`;
+  ans2.forEach((a,i)=>{ t += `${i+1}. ${a===1?"Oui":a===0?"Non":"NR"}\n`; });
+  return t;
+}
+
+// Navigation
+$("date").valueAsDate = new Date();
+$("consent").addEventListener("change", e=> $("go1").disabled = !e.target.checked);
+$("go1").onclick = ()=> show("step-p1");
+$("back1").onclick = ()=> show("step-intro");
+$("go2").onclick = ()=> { if(checkAll("list-p1", ans1)) show("step-p2"); };
+$("back2").onclick = ()=> show("step-p1");
+$("go3").onclick = ()=> { if(checkAll("list-p2", ans2)){ renderResults(); show("step-res"); } };
+$("pdf").onclick = ()=> window.print();
+$("mail").onclick = ()=> {
+  const sub = encodeURIComponent("Questionnaire Expériences de l'enfance – "+($("nom").value.trim()||"patient(e)"));
+  location.href = `mailto:contact@melodiepsychotherapie.fr?subject=${sub}&body=${encodeURIComponent(mailBody())}`;
+};
+$("restart").onclick = ()=> { if(confirm("Effacer toutes les réponses et recommencer ?")) location.reload(); };
+
+buildList("list-p1", P1, ans1, false);
+buildList("list-p2", P2, ans2, true);
+</script>
+</body>
+</html>
